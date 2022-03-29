@@ -6,8 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'item.dart';
 
 class DbHelper {
-  late DbHelper _dbHelper;
-  late Database _database;
+  static DbHelper _dbHelper;
+  static Database _database;
   DbHelper._createObject();
 
   Future<Database> initDb() async {
@@ -55,7 +55,7 @@ class DbHelper {
       var itemMapList = await select();
       int count = itemMapList.length;
       List<Item> itemList = List<Item>();
-      for (var i = 0; i < count; i++) {
+      for (int i = 0; i < count; i++) {
         itemList.add(Item.fromMap(itemMapList[i]));
       }
       return itemList;
@@ -72,4 +72,6 @@ class DbHelper {
       }
       return _database;
     }
+
+  select() {}
 }
