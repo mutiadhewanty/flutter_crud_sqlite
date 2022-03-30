@@ -1,7 +1,7 @@
 class Item {
-  int _id;
-  String _name;
-  int _price;
+  late int _id;
+  late String _name;
+  late int _price;
 
   int get id => _id;
 
