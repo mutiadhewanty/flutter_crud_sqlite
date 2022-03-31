@@ -15,7 +15,20 @@ class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<Item>? itemList;
+  List<Map<String, dynamic>> _item = [];
+  bool _isLoading = true;
+  void _refreshItems() async {
+    final data = await dbHelper.select();
+    setState(() {
+      _item = data;
+      _isLoading = false;
+    });
+  }
   @override
+  void initState(){
+    super.initState();
+    _refreshItems();
+  }
   Widget build(BuildContext context) {
     if (itemList == null) {
       itemList = <Item>[];
@@ -73,14 +86,14 @@ class HomeState extends State<Home> {
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.greenAccent,
               child: Icon(Icons.ad_units),
             ),
             title: Text(
               this.itemList![index].name,
               style: textStyle,
             ),
-            subtitle: Text(this.itemList![index].price.toString()),
+            subtitle: Expanded(child: Text(this.itemList![index].price.toString())),
             trailing: SizedBox(
               width: 100,
               child: Row(

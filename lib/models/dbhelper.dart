@@ -24,7 +24,23 @@ class DbHelper {
  CREATE TABLE item (
  id INTEGER PRIMARY KEY AUTOINCREMENT,
  name TEXT,
- price INTEGER
+ price INTEGER,
+ )
+ ''');
+  }
+  Future<dynamic> alterTable(String item, String kode, int stok) async {
+  var dbClient = await item.db;
+  var count = await dbClient.execute("ALTER TABLE $item ADD "
+      "COLUMN $kode TEXT;"
+      "COLUMN $stok INTEGER;");
+  print(await dbClient.query(item));
+  return count;
+}
+void _alterTable(Database db, int version) async {
+    await db.execute('''
+ ALTER TABLE item (
+   ADD COLUMN kode TEXT;
+   ADD COLUMN stok INTEGER;
  )
  ''');
   }

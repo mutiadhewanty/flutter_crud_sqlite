@@ -14,11 +14,15 @@ class EntryFormState extends State<EntryForm> {
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController kodeController = TextEditingController();
+  TextEditingController stokController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     if (item != null) {
       nameController.text = item!.name;
       priceController.text = item!.price.toString();
+      kodeController.text = item!.kode;
+      stokController.text = item!.stok.toString();
     }
     return Scaffold(
         appBar: AppBar(
@@ -29,6 +33,21 @@ class EntryFormState extends State<EntryForm> {
           padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
           child: ListView(
             children: <Widget>[
+              // kode
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: TextField(
+                  controller: kodeController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    labelText: 'Kode Barang',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (value) {},
+                ),
+              ),
               // nama
               Padding(
                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -41,8 +60,7 @@ class EntryFormState extends State<EntryForm> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
-                  onChanged: (value) {
-                  },
+                  onChanged: (value) {},
                 ),
               ),
               // harga
@@ -53,6 +71,23 @@ class EntryFormState extends State<EntryForm> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Harga',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    //
+                  },
+                ),
+              ),
+              // stok
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: TextField(
+                  controller: stokController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Stok',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -79,8 +114,11 @@ class EntryFormState extends State<EntryForm> {
                         onPressed: () {
                           if (item == null) {
                             // insert
-                            item = Item(nameController.text,
-                                int.parse(priceController.text));
+                            item = Item(
+                                nameController.text,
+                                int.parse(priceController.text),
+                                kodeController.text,
+                                int.parse(stokController.text));
                           } else {
                             // update
                             item!.name = nameController.text;
