@@ -81,17 +81,42 @@ class HomeState extends State<Home> {
               style: textStyle,
             ),
             subtitle: Text(this.itemList![index].price.toString()),
-            trailing: GestureDetector(
-              child: Icon(Icons.delete),
-              onTap: () async {
-                //TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
-              },
+            trailing: SizedBox(
+              width: 100,
+              child: Row(
+                children: [
+                  GestureDetector(
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.green,
+                    ),
+                    onTap: () async {
+                      var item = await navigateToEntryForm(
+                          context, this.itemList![index]);
+                      //edit item
+                      if (item != null) {
+                        int result = await dbHelper.update(item);
+                        if (result > 0) {
+                          updateListView();
+                        }
+                      }
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  GestureDetector(
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onTap: () async {
+                      //delete item
+                      dbHelper.delete(itemList![index].id);
+                      updateListView();
+                    },
+                  ),
+                ],
+              ),
             ),
-            onTap: () async {
-              var item =
-                  await navigateToEntryForm(context, this.itemList![index]);
-              //TODO 4 Panggil Fungsi untuk Edit data
-            },
           ),
         );
       },

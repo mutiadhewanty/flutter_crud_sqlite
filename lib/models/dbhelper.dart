@@ -36,7 +36,7 @@ class DbHelper {
     return mapList;
   }
 
-//create item
+//insert item
   Future<int> insert(Item object) async {
     Database db = await this.initDb();
     int count = await db.insert('item', object.toMap());
