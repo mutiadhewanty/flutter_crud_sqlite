@@ -3,22 +3,22 @@ import '../models/dbhelper.dart';
 import '../models/item.dart';
 
 class EntryForm extends StatefulWidget {
-  final Item item;
+  final Item? item;
   EntryForm(this.item);
   @override
   EntryFormState createState() => EntryFormState(this.item);
 }
 
 class EntryFormState extends State<EntryForm> {
-  Item item;
+  Item? item;
   EntryFormState(this.item);
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     if (item != null) {
-      nameController.text = item.name;
-      priceController.text = item.price.toString();
+      nameController.text = item!.name;
+      priceController.text = item!.price.toString();
     }
     return Scaffold(
         appBar: AppBar(
@@ -83,8 +83,8 @@ class EntryFormState extends State<EntryForm> {
                                 int.parse(priceController.text));
                           } else {
                             // update
-                            item.name = nameController.text;
-                            item.price = int.parse(priceController.text);
+                            item!.name = nameController.text;
+                            item!.price = int.parse(priceController.text);
                           }
                           Navigator.pop(context, item);
                         },

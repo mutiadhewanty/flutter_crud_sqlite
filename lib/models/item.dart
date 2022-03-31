@@ -1,9 +1,9 @@
 class Item {
-  late int _id;
+  int? _id;
   late String _name;
   late int _price;
 
-  int get id => _id;
+  int get id => _id!;
 
   String get name => this._name;
 

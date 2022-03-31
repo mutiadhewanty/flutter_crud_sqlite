@@ -37,7 +37,7 @@ class HomeState extends State<Home> {
               onPressed: () async {
                 var item = await navigateToEntryForm(context, null);
                 if (item != null) {
-                  //TODO 2 Panggil Fungsi untuk Insert ke DB
+                  //Insert ke Database
                   int result = await dbHelper.insert(item);
                   if (result > 0) {
                     updateListView();
@@ -54,7 +54,7 @@ class HomeState extends State<Home> {
   Future<Item> navigateToEntryForm(BuildContext context, Item? item) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      return EntryForm(item!);
+      return EntryForm(item);
     }));
     return result;
   }
@@ -102,7 +102,7 @@ class HomeState extends State<Home> {
   void updateListView() {
     final Future<Database> dbFuture = dbHelper.initDb();
     dbFuture.then((database) {
-      //TODO 1 Select data dari DB
+      //select dari database
       Future<List<Item>> itemListFuture = dbHelper.getItemList();
       itemListFuture.then((itemList) {
         setState(() {
