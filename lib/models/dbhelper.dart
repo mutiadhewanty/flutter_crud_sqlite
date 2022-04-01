@@ -12,38 +12,25 @@ class DbHelper {
   // create database
   Future<Database> initDb() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + 'item.db';
+    String path = directory.path + 'items.db';
 
-    var itemDatabase = openDatabase(path, version: 4, onCreate: _createDb);
+    var itemDatabase = openDatabase(path, version: 1, onCreate: _createDb);
     return itemDatabase;
   }
 
   //crate table item
   void _createDb(Database db, int version) async {
     await db.execute('''
- CREATE TABLE item (
- id INTEGER PRIMARY KEY AUTOINCREMENT,
- name TEXT,
- price INTEGER,
- )
- ''');
+    CREATE TABLE item (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    price INTEGER,
+    kode TEXT,
+    stok INTEGER
+    )
+    ''');
   }
-  Future<dynamic> alterTable(String item, String kode, int stok) async {
-  var dbClient = await item.db;
-  var count = await dbClient.execute("ALTER TABLE $item ADD "
-      "COLUMN $kode TEXT;"
-      "COLUMN $stok INTEGER;");
-  print(await dbClient.query(item));
-  return count;
-}
-void _alterTable(Database db, int version) async {
-    await db.execute('''
- ALTER TABLE item (
-   ADD COLUMN kode TEXT;
-   ADD COLUMN stok INTEGER;
- )
- ''');
-  }
+
 
 //select item
   Future<List<Map<String, dynamic>>> select() async {

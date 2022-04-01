@@ -15,20 +15,7 @@ class HomeState extends State<Home> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
   List<Item>? itemList;
-  List<Map<String, dynamic>> _item = [];
-  bool _isLoading = true;
-  void _refreshItems() async {
-    final data = await dbHelper.select();
-    setState(() {
-      _item = data;
-      _isLoading = false;
-    });
-  }
-  @override
-  void initState(){
-    super.initState();
-    _refreshItems();
-  }
+
   Widget build(BuildContext context) {
     if (itemList == null) {
       itemList = <Item>[];
@@ -93,7 +80,19 @@ class HomeState extends State<Home> {
               this.itemList![index].name,
               style: textStyle,
             ),
-            subtitle: Expanded(child: Text(this.itemList![index].price.toString())),
+            subtitle: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(this.itemList![index].price.toString()),
+                ),
+                Expanded(
+                  child: Text(this.itemList![index].kode.toString()),
+                ),
+                Expanded(
+                  child: Text(this.itemList![index].stok.toString()),
+                ),
+              ],
+            ),
             trailing: SizedBox(
               width: 100,
               child: Row(

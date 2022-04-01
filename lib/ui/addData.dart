@@ -116,13 +116,15 @@ class EntryFormState extends State<EntryForm> {
                             // insert
                             item = Item(
                                 nameController.text,
-                                int.parse(priceController.text),
                                 kodeController.text,
+                                int.parse(priceController.text),
                                 int.parse(stokController.text));
                           } else {
                             // update
                             item!.name = nameController.text;
                             item!.price = int.parse(priceController.text);
+                            item!.kode = kodeController.text;
+                            item!.stok = int.parse(stokController.text);
                           }
                           Navigator.pop(context, item);
                         },
